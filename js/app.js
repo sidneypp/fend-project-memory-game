@@ -25,7 +25,21 @@ function shuffle(array) {
     return array;
 }
 
+const deck = document.querySelector('.deck');
+const cards = document.querySelectorAll('.card'); //NodeList
+const cardsList = [...cards];
 
+const game = {
+    randomCards () {
+        const fragment = document.createDocumentFragment();
+        const suffleCards = shuffle(cardsList);
+        deck.innerHTML = '';
+        suffleCards.forEach(element => {
+            deck.appendChild(element);
+        });
+    }
+}
+game.randomCards();
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
