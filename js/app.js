@@ -26,9 +26,10 @@ function shuffle(array) {
 }
 
 const deck = document.querySelector('.deck');
-const cards = document.querySelectorAll('.card'); //NodeList
-const cardsList = [...cards];
+const cardsDeck = document.querySelectorAll('.card'); //NodeList
+const cardsList = [...cardsDeck]; //ArrayList
 
+/* Object game */
 const game = {
     randomCards () {
         const fragment = document.createDocumentFragment();
@@ -37,9 +38,18 @@ const game = {
         suffleCards.forEach(element => {
             deck.appendChild(element);
         });
+    },
+    startGame () {
+        cardsDeck.forEach(oneCard => {
+            oneCard.addEventListener('click', (event) => {
+                console.log("Cartão clicado!");
+            })
+        });
     }
 }
+
 game.randomCards();
+game.startGame();
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
