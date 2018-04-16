@@ -43,31 +43,44 @@ const cardsList = [...cardsDeck]; //ArrayList
 
 let openedCards = [];
 
-/* Object gameUtils */
-const gameUtils = {
-    checkCards () {
-        openedCards = document.querySelectorAll('.open');
-        if (openedCards.length === 2) {
-            console.log(openedCards);
-        }
-    }
-};
 
 /* Object Card */
 let card = {
     toggle (selectedCards, classes) {
         if (isIterable(selectedCards)) {
-            for (let selectedCard of selectedCards) {
+            selectedCards.forEach(selectedCard => {
                 classes.forEach(classe => {
                     selectedCard.classList.toggle(classe);
                 });
-            }
+            });
         } else {
             classes.forEach(classe => {
                 selectedCards.classList.toggle(classe);
             });
         }
         gameUtils.checkCards();
+    }
+};
+
+/* Object gameUtils */
+const gameUtils = {
+    checkCards () {
+        openedCards = document.querySelectorAll('.open');
+        if (openedCards.length === 2) {
+            this.matchedCards();
+        }
+    },
+    matchedCards () {
+        let openCards = openedCards;
+        const isEqualCard = openedCards[0].isEqualNode(openCards[1]);
+        if (isEqualCard) {
+            card.toggle(openedCards, ['open', 'match']);
+        } else {
+            setTimeout(() => {
+                card.toggle(openCards, ['unmatch', 'show']);
+            }, 1000);
+            card.toggle(openedCards, ['unmatch', 'open']);
+        }
     }
 };
 
@@ -84,7 +97,8 @@ const game = {
     startGame () {
         cardsDeck.forEach(oneCard => {
             oneCard.addEventListener('click', (event) => {
-                card.toggle(oneCard, ['open', 'show']);
+                if (!oneCard.className.includes("match"))
+                    card.toggle(oneCard, ['open', 'show']);
             })
         });
     }
