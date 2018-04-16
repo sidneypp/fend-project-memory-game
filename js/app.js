@@ -97,7 +97,7 @@ const game = {
     startGame () {
         cardsDeck.forEach(oneCard => {
             oneCard.addEventListener('click', (event) => {
-                if (!oneCard.className.includes("match"))
+                if (!oneCard.className.includes("match") && !oneCard.className.includes("open"))
                     card.toggle(oneCard, ['open', 'show']);
             })
         });
