@@ -63,27 +63,50 @@ h1 {
     justify-content: center;
     align-items: center;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+    transform: rotateY(180deg);
+    transition: transform .2s ease, background .1s linear;
 }
 
 .deck .card.open {
-    transform: rotateY(0);
     background: #02b3e4;
     cursor: default;
 }
 
 .deck .card.show {
     font-size: 33px;
+    transform: rotateY(0);
 }
 
 .deck .card.match {
     cursor: default;
     background: #02ccba;
-    font-size: 33px;
+    animation: matched .8s ease;
+}
+
+@keyframes matched {
+    33% {
+        background: #0ae1cf;
+        transform: scale(1.1)
+    }
+    66% {
+        transform: scale(1)
+    }
 }
 
 .deck .card.unmatch {
     cursor: default;
     background: #ff0000;
+    animation: unmatched .8s ease;
+}
+
+@keyframes unmatched {
+    33% {
+        transform: rotateZ(4deg) translateX(10px);
+    }
+    66% {
+        transform: rotateZ(-4deg)  translateX(-10px);
+    }
+    
 }
 
 /*
