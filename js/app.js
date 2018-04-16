@@ -41,6 +41,18 @@ const deck = document.querySelector('.deck');
 const cardsDeck = document.querySelectorAll('.card'); //NodeList
 const cardsList = [...cardsDeck]; //ArrayList
 
+let openedCards = [];
+
+/* Object gameUtils */
+const gameUtils = {
+    checkCards () {
+        openedCards = document.querySelectorAll('.open');
+        if (openedCards.length === 2) {
+            console.log(openedCards);
+        }
+    }
+};
+
 /* Object Card */
 let card = {
     toggle (selectedCards, classes) {
@@ -55,6 +67,7 @@ let card = {
                 selectedCards.classList.toggle(classe);
             });
         }
+        gameUtils.checkCards();
     }
 };
 
