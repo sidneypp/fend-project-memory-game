@@ -25,9 +25,38 @@ function shuffle(array) {
     return array;
 }
 
+/* 
+* Verifica se uma função é iterativa
+*/
+function isIterable(obj) {
+    // checks for null and undefined
+    if (obj == null) {
+      return false;
+    }
+    return typeof obj[Symbol.iterator] === 'function';
+  }
+
+/* Global Variables */  
 const deck = document.querySelector('.deck');
 const cardsDeck = document.querySelectorAll('.card'); //NodeList
 const cardsList = [...cardsDeck]; //ArrayList
+
+/* Object Card */
+let card = {
+    toggle (selectedCards, classes) {
+        if (isIterable(selectedCards)) {
+            for (let selectedCard of selectedCards) {
+                classes.forEach(classe => {
+                    selectedCard.classList.toggle(classe);
+                });
+            }
+        } else {
+            classes.forEach(classe => {
+                selectedCards.classList.toggle(classe);
+            });
+        }
+    }
+};
 
 /* Object game */
 const game = {
@@ -42,7 +71,7 @@ const game = {
     startGame () {
         cardsDeck.forEach(oneCard => {
             oneCard.addEventListener('click', (event) => {
-                console.log("Cartão clicado!");
+                card.toggle(oneCard, ['open', 'show']);
             })
         });
     }
