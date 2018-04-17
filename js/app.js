@@ -31,10 +31,12 @@ function isIterable(obj) {
 
 /** Global Variables */  
 const deck = document.querySelector('.deck');
-const cardsDeck = document.querySelectorAll('.card'); //NodeList
-const cardsList = [...cardsDeck]; //ArrayList
+const restart = document.querySelector('.restart')
+const cardsDeck = document.querySelectorAll('.card');
+const cardsList = [...cardsDeck];
 
 let openedCards = [];
+let myTimeout;
 
 
 /** Object Card */
@@ -72,7 +74,7 @@ const gameUtils = {
         if (isEqualCard) {
             card.toggle(openedCards, ['open', 'match']);
         } else {
-            setTimeout(() => {
+            myTimeout = setTimeout(() => {
                 card.toggle(openCards, ['unmatch', 'show']);
             }, 1000);
             card.toggle(openedCards, ['unmatch', 'open']);
@@ -90,7 +92,7 @@ const game = {
             deck.appendChild(element); 
         });
     },
-/** Add an event listener to the deck container*/
+/** Add an event listener to the deck container. */
     startGame () {
         deck.addEventListener('click', event => {
             oneCard = event.target;
@@ -101,8 +103,18 @@ const game = {
                     card.toggle(oneCard, ['open', 'show']);
             }
         });
+    },
+/** Reset the game by closing the cards and randomizing them. */
+    resetGame () {
+        clearTimeout(myTimeout);
+        cardsDeck.forEach(card => {
+            card.className = 'card'
+        })
+        game.randomCards();
     }
 };
 
 game.randomCards();
 game.startGame();
+
+restart.addEventListener('click', game.resetGame);

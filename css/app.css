@@ -134,4 +134,11 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+    padding: 5px;
+    transition: transform .4s cubic-bezier(.4,0,.2,1), opacity .3s linear;
+}
+
+.score-panel .restart:hover {
+    opacity: .5;
+    transform: rotateZ(270deg);
 }
