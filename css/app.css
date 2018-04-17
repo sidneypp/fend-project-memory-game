@@ -64,7 +64,7 @@ h1 {
     align-items: center;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
     transform: rotateY(180deg);
-    transition: transform .2s ease, background .1s linear;
+    transition: transform .2s ease, background 0.1s linear;
 }
 
 .deck .card.open {
@@ -80,7 +80,7 @@ h1 {
 .deck .card.match {
     cursor: default;
     background: #02ccba;
-    animation: matched .8s ease;
+    animation: matched 0.8s ease;
 }
 
 @keyframes matched {
@@ -96,7 +96,7 @@ h1 {
 .deck .card.unmatch {
     cursor: default;
     background: #ff0000;
-    animation: unmatched .8s ease;
+    animation: unmatched 0.8s ease;
 }
 
 @keyframes unmatched {
@@ -135,10 +135,18 @@ h1 {
     float: right;
     cursor: pointer;
     padding: 5px;
-    transition: transform .4s cubic-bezier(.4,0,.2,1), opacity .3s linear;
+    transition: transform .4s cubic-bezier(0.4,0,0.2,1), opacity .3s linear;
 }
 
 .score-panel .restart:hover {
     opacity: .5;
     transform: rotateZ(270deg);
+}
+
+.fa-star.scored {
+    color: rgb(240, 212, 0);
+}
+
+.fa-star {
+    color: rgba(0,0,0,.1);
 }

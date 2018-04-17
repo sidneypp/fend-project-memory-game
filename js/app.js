@@ -35,7 +35,10 @@ const restart = document.querySelector('.restart')
 const cardsDeck = document.querySelectorAll('.card');
 const cardsList = [...cardsDeck];
 
+let scoredStars = document.getElementsByClassName('scored')
+
 let openedCards = [];
+let moves = 0;
 let myTimeout;
 
 
@@ -64,6 +67,8 @@ const gameUtils = {
     checkCards () {
         openedCards = document.querySelectorAll('.open');
         if (openedCards.length === 2) {
+            moves++;
+            this.changeScore();
             this.matchedCards();
         }
     },
@@ -79,6 +84,15 @@ const gameUtils = {
             }, 1000);
             card.toggle(openedCards, ['unmatch', 'open']);
         }
+    },
+/** Updates player moves and score. */
+    changeScore() {
+        const START_COUNT = 10
+        const movesElement = document.querySelector('.moves');
+        movesElement.innerHTML = moves;
+        if ((moves%START_COUNT + 1) === START_COUNT) {
+            scoredStars[scoredStars.length - 1].classList.remove('scored');
+        }
     }
 };
 
@@ -88,6 +102,7 @@ const game = {
     randomCards () {
         const suffleCards = shuffle(cardsList);
         deck.innerHTML = '';
+        gameUtils.changeScore();
         suffleCards.forEach(element => {
             deck.appendChild(element); 
         });
@@ -106,6 +121,7 @@ const game = {
     },
 /** Reset the game by closing the cards and randomizing them. */
     resetGame () {
+        moves = 0;
         clearTimeout(myTimeout);
         cardsDeck.forEach(card => {
             card.className = 'card'
