@@ -143,6 +143,7 @@ const game = {
                 if (!cardOpen && !cardMatch)
                     card.toggle(oneCard, ['open', 'show']);
                     this.finishedGame();
+                    this.gameOver();
             }
         });
     },
@@ -162,6 +163,14 @@ const game = {
                 'Congratulations', 
                 'success', 
                 `You reached the throne! Let's celebrate!`)
+        }
+    }, 
+    gameOver() {
+        if (!scoredStars.length) {
+            createModal(
+                'Oh no!', 
+                'game-over', 
+                `It look's like your stars are gone!`)
         }
     }
 };
