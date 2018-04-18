@@ -142,6 +142,7 @@ const game = {
                 cardMatch = oneCard.className.includes('match');
                 if (!cardOpen && !cardMatch)
                     card.toggle(oneCard, ['open', 'show']);
+                    this.finishedGame();
             }
         });
     },
@@ -153,6 +154,15 @@ const game = {
             card.className = 'card'
         })
         game.randomCards();
+    },
+    finishedGame() {
+        const matchedCards = document.getElementsByClassName('match');
+        if (matchedCards.length === 16) {
+            createModal(
+                'Congratulations', 
+                'success', 
+                `You reached the throne! Let's celebrate!`)
+        }
     }
 };
 
