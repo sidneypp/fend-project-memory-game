@@ -48,20 +48,17 @@ let myTimeout;
  * @param {string} myMessage - Message that will be displayed within the modal 
  */
 function createModal(myTitle,classTitle, myMessage) {
-    const myContainer = document.querySelector('.container');
     const modal = document.querySelector('.modal');
     const title = document.getElementById('title');
     const message = document.getElementById('message')
     const scoreMoves = document.querySelector('.scored-moves');
     const buttonRestart = document.querySelector('.button');
-    myContainer.classList.add('hidden');
     modal.classList.add('show');
     title.innerHTML = myTitle;
     title.classList = classTitle;
     message.innerHTML = myMessage;
     scoreMoves.innerHTML = moves;
     buttonRestart.addEventListener('click', event => {
-        myContainer.classList.remove('hidden');
         modal.classList.remove('show');
         game.resetGame();
     });
