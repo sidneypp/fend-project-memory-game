@@ -112,11 +112,12 @@ const gameUtils = {
     },
 /** Updates player moves and score. */
     changeScore() {
-        const START_COUNT = 10
+        const START_COUNT = 16
         const movesElement = document.querySelector('.moves');
         movesElement.innerHTML = moves;
-        if ((moves%START_COUNT + 1) === START_COUNT) {
-            scoredStars[scoredStars.length - 1].classList.remove('scored');
+        if (moves%START_COUNT === 0 && moves!==0 && scoredStars.length) {
+            scoredStars[scoredStars.length-scoredStars.length].classList.remove('scored');
+            scoredStars[scoredStars.length-1].classList.remove('scored');
         }
     }
 };
