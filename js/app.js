@@ -30,12 +30,15 @@ function isIterable(obj) {
   }
 
 /** Global Variables */  
+const clock = document.querySelector('.clock');
 const deck = document.querySelector('.deck');
 const restart = document.querySelector('.restart')
 const cardsDeck = document.querySelectorAll('.card');
 const cardsList = [...cardsDeck];
 
 let scoredStars = document.getElementsByClassName('scored');
+let timer;
+let gameStarted = false;
 
 let openedCards = [];
 let moves = 0;
@@ -52,12 +55,14 @@ function createModal(myTitle,classTitle, myMessage) {
     const title = document.getElementById('title');
     const message = document.getElementById('message')
     const scoreMoves = document.querySelector('.scored-moves');
+    const ScoreClock = document.querySelector('.scored-clock');
     const buttonRestart = document.querySelector('.button');
     modal.classList.add('show');
     title.innerHTML = myTitle;
     title.classList = classTitle;
     message.innerHTML = myMessage;
     scoreMoves.innerHTML = moves;
+    ScoreClock.innerHTML = clock.innerHTML;
     buttonRestart.addEventListener('click', event => {
         modal.classList.remove('show');
         game.resetGame();
@@ -116,6 +121,31 @@ const gameUtils = {
             scoredStars[scoredStars.length-scoredStars.length].classList.remove('scored');
             scoredStars[scoredStars.length-1].classList.remove('scored');
         }
+    },
+    startTime() {
+        let startTime = new Date().getTime();
+
+        // Update the timer every second
+        timer = setInterval(function() {
+        var now = new Date().getTime();
+  
+        // Find the time elapsed between now and start
+        var elapsed = now - startTime;
+  
+        // Calculate minutes and seconds
+        let minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
+  
+        // Add starting 0 if seconds < 10
+        if (seconds < 10) {
+          seconds = "0" + seconds;
+        }
+  
+        let currentTime = minutes + ":" + seconds;
+  
+        // Update clock on game screen and modal
+        clock.innerHTML = currentTime;
+      }, 750);
     }
 };
 
@@ -123,6 +153,7 @@ const gameUtils = {
 const game = {
 /** Randomize cards and add to deck container. */
     randomCards () {
+        clock.innerHTML = "0:00"
         const suffleCards = shuffle(cardsList);
         deck.innerHTML = '';
         gameUtils.changeScore();
@@ -133,6 +164,10 @@ const game = {
 /** Add an event listener to the deck container. */
     startGame () {
         deck.addEventListener('click', event => {
+            if (!gameStarted) {
+                gameUtils.startTime();
+                gameStarted = true;
+            }
             oneCard = event.target;
             if (oneCard.nodeName === 'LI') {
                 cardOpen = oneCard.className.includes('open');
@@ -148,6 +183,8 @@ const game = {
     resetGame () {
         const totalStars = document.getElementsByClassName('fa-star');
         moves = 0;
+        gameStarted = false;
+        clearInterval(timer);
         clearTimeout(myTimeout);
         cardsDeck.forEach(card => {
             card.className = 'card'
@@ -160,6 +197,7 @@ const game = {
     finishedGame() {
         const matchedCards = document.getElementsByClassName('match');
         if (matchedCards.length === 16) {
+            clearInterval(timer);
             createModal(
                 'Congratulations', 
                 'success', 
@@ -168,6 +206,7 @@ const game = {
     }, 
     gameOver() {
         if (!scoredStars.length) {
+            clearInterval(timer);
             createModal(
                 'Oh no!', 
                 'game-over', 
