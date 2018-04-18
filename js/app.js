@@ -35,12 +35,37 @@ const restart = document.querySelector('.restart')
 const cardsDeck = document.querySelectorAll('.card');
 const cardsList = [...cardsDeck];
 
-let scoredStars = document.getElementsByClassName('scored')
+let scoredStars = document.getElementsByClassName('scored');
 
 let openedCards = [];
 let moves = 0;
 let myTimeout;
 
+/** 
+ * @description Function to generate modal on the page, informing the player if he won or lost.
+ * @param {string} myTitle - The title of the modal 
+ * @param {string} classTitle - The class that will be in the modal title, possible choices are: success or game-over 
+ * @param {string} myMessage - Message that will be displayed within the modal 
+ */
+function createModal(myTitle,classTitle, myMessage) {
+    const myContainer = document.querySelector('.container');
+    const modal = document.querySelector('.modal');
+    const title = document.getElementById('title');
+    const message = document.getElementById('message')
+    const scoreMoves = document.querySelector('.scored-moves');
+    const buttonRestart = document.querySelector('.button');
+    myContainer.classList.add('hidden');
+    modal.classList.add('show');
+    title.innerHTML = myTitle;
+    title.classList = classTitle;
+    message.innerHTML = myMessage;
+    scoreMoves.innerHTML = moves;
+    buttonRestart.addEventListener('click', event => {
+        myContainer.classList.remove('hidden');
+        modal.classList.remove('show');
+        game.resetGame();
+    });
+}
 
 /** Object Card */
 let card = {
