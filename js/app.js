@@ -149,11 +149,15 @@ const game = {
     },
 /** Reset the game by closing the cards and randomizing them. */
     resetGame () {
+        const totalStars = document.getElementsByClassName('fa-star');
         moves = 0;
         clearTimeout(myTimeout);
         cardsDeck.forEach(card => {
             card.className = 'card'
-        })
+        });
+        for (let star of totalStars) {
+            star.classList.add('scored');
+        }
         game.randomCards();
     },
     finishedGame() {
