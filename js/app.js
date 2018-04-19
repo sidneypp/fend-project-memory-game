@@ -27,7 +27,7 @@ function isIterable(obj) {
       return false;
     }
     return typeof obj[Symbol.iterator] === 'function';
-  }
+}
 
 /** Global Variables */  
 const clock = document.querySelector('.clock');
@@ -117,7 +117,7 @@ const gameUtils = {
         const START_COUNT = 16
         const movesElement = document.querySelector('.moves');
         movesElement.innerHTML = moves;
-        if (moves%START_COUNT === 0 && moves!==0 && scoredStars.length) {
+        if (moves%START_COUNT === 0 && moves !== 0 && scoredStars.length > 2) {
             scoredStars[scoredStars.length-scoredStars.length].classList.remove('scored');
             scoredStars[scoredStars.length-1].classList.remove('scored');
         }
@@ -175,7 +175,6 @@ const game = {
                 if (!cardOpen && !cardMatch)
                     card.toggle(oneCard, ['open', 'show']);
                     this.finishedGame();
-                    this.gameOver();
             }
         });
     },
@@ -202,15 +201,6 @@ const game = {
                 'Congratulations', 
                 'success', 
                 `You reached the throne! Let's celebrate!`)
-        }
-    }, 
-    gameOver() {
-        if (!scoredStars.length) {
-            clearInterval(timer);
-            createModal(
-                'Oh no!', 
-                'game-over', 
-                `It look's like your stars are gone!`)
         }
     }
 };
